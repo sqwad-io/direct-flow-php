@@ -1,0 +1,9 @@
+{
+  "name": "direct-flow-php",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "tests": "DIRECT_FLOW_SERVER=http://127.0.0.1:3000 ./vendor/bin/phpunit tests"
+  }
+}
