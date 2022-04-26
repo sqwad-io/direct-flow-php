@@ -32,6 +32,23 @@ class DirectFlowClient
     public function publish($data): bool
     {
         $r = $this->client->post('/publish/' . $this->namespace, [
+            RequestOptions::JSON => [
+                'data' => $data
+            ]
+        ]);
+
+        return $r->getStatusCode() === 201;
+    }
+
+    /**
+     * Send directly to websocket, WARNING: “to”, “channel” and “_metadata” are reserved top level words !
+     * @param $data
+     * @return bool
+     * @throws GuzzleException
+     */
+    public function rawPublish($data): bool
+    {
+        $r = $this->client->post('/publish/' . $this->namespace, [
             RequestOptions::JSON => $data
         ]);
 
@@ -43,7 +60,10 @@ class DirectFlowClient
      */
     public function sendTo(string $recipient, array $data): bool
     {
-        return $this->publish(array_merge(['to' => $recipient], $data));
+        return $this->publish([
+            'to' => $recipient,
+            'data' => $data
+        ]);
     }
 
     /**
@@ -51,7 +71,10 @@ class DirectFlowClient
      */
     public function sendToChannel(string $channel, array $data): bool
     {
-        return $this->publish(array_merge(['channel' => $channel], $data));
+        return $this->publish([
+            'channel' => $channel,
+            'data' => $data
+        ]);
     }
 
     /**

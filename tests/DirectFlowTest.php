@@ -33,6 +33,17 @@ final class DirectFlowTest extends TestCase
         }
     }
 
+    public function testRawMessage()
+    {
+        try {
+            $this->assertTrue($this->client->rawPublish([
+                'hello' => 'world',
+            ]));
+        } catch (Throwable $e) {
+            $this->fail();
+        }
+    }
+
     public function testChannel()
     {
         try {
